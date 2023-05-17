@@ -20,6 +20,7 @@ const RegistrationScreen = () => {
   const [mailFocus, setMailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const [isPasswordShow, setIsPasswordShow] = useState(false);
 
   const handleMailChange = (text) => {
     setMail(text);
@@ -93,21 +94,35 @@ const RegistrationScreen = () => {
                   setMailFocus(false);
                 }}
               />
-              <TextInput
-                style={[styles.input, passwordFocus && styles.focusInput]}
-                placeholder="Пароль"
-                secureTextEntry
-                value={password}
-                onChangeText={handlePasswordChange}
-                onFocus={() => {
-                  setIsKeyboardOpen(true);
-                  setPasswordFocus(true);
-                }}
-                onBlur={() => {
-                  setIsKeyboardOpen(false);
-                  setPasswordFocus(false);
-                }}
-              />
+              <View style={{ width: "100%" }}>
+                <TextInput
+                  style={[
+                    styles.inputPassword,
+                    passwordFocus && styles.focusInput,
+                  ]}
+                  placeholder="Пароль"
+                  secureTextEntry={!isPasswordShow ? true : false}
+                  value={password}
+                  onChangeText={handlePasswordChange}
+                  onFocus={() => {
+                    setIsKeyboardOpen(true);
+                    setPasswordFocus(true);
+                  }}
+                  onBlur={() => {
+                    setIsKeyboardOpen(false);
+                    setPasswordFocus(false);
+                  }}
+                />
+                <TouchableOpacity
+                  onPress={() => setIsPasswordShow(!isPasswordShow)}
+                  style={styles.showPassword}
+                >
+                  <Text style={styles.buttonTextLogin}>
+                    {!isPasswordShow ? "Показать" : "Скрыть"}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
               <View
                 style={{
                   display: isKeyboardOpen ? "none" : "flex",
@@ -169,6 +184,21 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     padding: 16,
     borderRadius: 8,
+  },
+  inputPassword: {
+    width: "100%",
+    height: 50,
+    borderColor: "#BDBDBD",
+    borderWidth: 1,
+    marginBottom: 16,
+    padding: 16,
+    borderRadius: 8,
+    position: "relative",
+  },
+  showPassword: {
+    position: "absolute",
+    right: 16,
+    top: 16,
   },
   focusInput: {
     borderColor: "#FF6C00",
