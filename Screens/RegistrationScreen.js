@@ -16,6 +16,9 @@ const RegistrationScreen = () => {
   const [login, setLogin] = useState("");
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
+  const [loginFocus, setLoginFocus] = useState(false);
+  const [mailFocus, setMailFocus] = useState(false);
+  const [passwordFocus, setPasswordFocus] = useState(false);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
   const handleMailChange = (text) => {
@@ -31,7 +34,7 @@ const RegistrationScreen = () => {
   };
 
   const handleRegistration = () => {
-    console.log("Registrated:", password, mail, login);
+    console.log("Registrated:", { password, mail, login });
     setMail("");
     setPassword("");
     setLogin("");
@@ -44,7 +47,7 @@ const RegistrationScreen = () => {
       <TouchableWithoutFeedback
         onPress={() => {
           Keyboard.dismiss();
-          setIsKeyboardOpen;
+          setIsKeyboardOpen(false);
         }}
       >
         <ImageBackground
@@ -59,42 +62,60 @@ const RegistrationScreen = () => {
           >
             <KeyboardAvoidingView
               style={styles.formWrapper}
-              behavior={Platform.OS === "ios" ? "padding" : null}
+              behavior={Platform.OS === "ios" ? "padding" : "padding"}
             >
               <Text style={styles.title}>Регистрация</Text>
               <TextInput
-                style={styles.input}
+                style={[styles.input, loginFocus && styles.focusInput]}
                 placeholder="Логин"
-                value={mail}
+                value={login}
                 onChangeText={handleLoginChange}
-                onFocus={() => setIsKeyboardOpen(true)}
+                onFocus={() => {
+                  setIsKeyboardOpen(true);
+                  setLoginFocus(true);
+                }}
+                onBlur={() => {
+                  setIsKeyboardOpen(false);
+                  setLoginFocus(false);
+                }}
               />
               <TextInput
-                style={styles.input}
+                style={[styles.input, mailFocus && styles.focusInput]}
                 placeholder="Адрес электронной почты"
                 value={mail}
                 onChangeText={handleMailChange}
-                onFocus={() => setIsKeyboardOpen(true)}
+                onFocus={() => {
+                  setIsKeyboardOpen(true);
+                  setMailFocus(true);
+                }}
+                onBlur={() => {
+                  setIsKeyboardOpen(false);
+                  setMailFocus(false);
+                }}
               />
               <TextInput
-                style={styles.input}
+                style={[styles.input, passwordFocus && styles.focusInput]}
                 placeholder="Пароль"
                 secureTextEntry
                 value={password}
                 onChangeText={handlePasswordChange}
-                onFocus={() => setIsKeyboardOpen(true)}
+                onFocus={() => {
+                  setIsKeyboardOpen(true);
+                  setPasswordFocus(true);
+                }}
+                onBlur={() => {
+                  setIsKeyboardOpen(false);
+                  setPasswordFocus(false);
+                }}
               />
               <View
                 style={{
-                  // display: isKeyboardOpen ? "none" : "flex",
+                  display: isKeyboardOpen ? "none" : "flex",
                   width: "100%",
                 }}
               >
                 <TouchableOpacity
-                  style={{
-                    ...styles.button,
-                    // display: isKeyboardOpen ? "none" : "flex",
-                  }}
+                  style={styles.button}
                   onPress={handleRegistration}
                 >
                   <Text style={styles.buttonText}>Зарегистрироваться</Text>
@@ -143,11 +164,14 @@ const styles = StyleSheet.create({
   input: {
     width: "100%",
     height: 50,
-    borderColor: "gray",
+    borderColor: "#BDBDBD",
     borderWidth: 1,
     marginBottom: 16,
     padding: 16,
     borderRadius: 8,
+  },
+  focusInput: {
+    borderColor: "#FF6C00",
   },
   button: {
     width: "100%",

@@ -10,13 +10,31 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
+  Dimensions,
 } from "react-native";
 
 const LoginScreen = () => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
+  const [mailFocus, setMailFocus] = useState(false);
+  const [passwordFocus, setPasswordFocus] = useState(false);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const [dimensions, setDimensions] = useState(
+    Dimensions.get("window").width - 20 * 2
+  );
 
+  useEffect(() => {
+    const onChange = () => {
+      const width = Dimensions.get("window").width - 20 * 2;
+      const height = Dimensions.get("window").height;
+      console.log(height);
+      setDimensions(height);
+    };
+    Dimensions.addEventListener("change", onChange);
+    return () => {
+      Dimensions.removeEventListener("change", onChange);
+    };
+  }, []);
   const handleMailChange = (text) => {
     setMail(text);
   };
@@ -26,7 +44,7 @@ const LoginScreen = () => {
   };
 
   const handleLogin = () => {
-    console.log("Logined:", password, mail);
+    console.log("Logined:", { password, mail });
     setMail("");
     setPassword("");
     setIsKeyboardOpen(false);
@@ -34,11 +52,11 @@ const LoginScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, height: dimensions }}>
       <TouchableWithoutFeedback
         onPress={() => {
           Keyboard.dismiss();
-          setIsKeyboardOpen;
+          setIsKeyboardOpen(false);
         }}
       >
         <ImageBackground
@@ -53,26 +71,43 @@ const LoginScreen = () => {
           >
             <KeyboardAvoidingView
               style={styles.formWrapper}
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
+              behavior={Platform.OS === "ios" ? "padding" : null}
             >
               <Text style={styles.title}>Войти</Text>
+
               <TextInput
-                style={styles.input}
+                style={[styles.input, mailFocus && styles.focusInput]}
                 placeholder="Адрес электронной почты"
                 value={mail}
                 onChangeText={handleMailChange}
-                onFocus={() => setIsKeyboardOpen(true)}
+                onFocus={() => {
+                  setIsKeyboardOpen(true);
+                  setMailFocus(true);
+                }}
+                onBlur={() => {
+                  setIsKeyboardOpen(false);
+                  setMailFocus(false);
+                }}
               />
               <TextInput
-                style={styles.input}
+                style={[styles.input, passwordFocus && styles.focusInput]}
                 placeholder="Пароль"
                 secureTextEntry
                 value={password}
                 onChangeText={handlePasswordChange}
-                onFocus={() => setIsKeyboardOpen(true)}
+                onFocus={() => {
+                  setIsKeyboardOpen(true);
+                  setPasswordFocus(true);
+                }}
+                onBlur={() => {
+                  setIsKeyboardOpen(false);
+                  setPasswordFocus(false);
+                }}
               />
               <View
                 style={{
+                  display: isKeyboardOpen ? "none" : "flex",
+
                   width: "100%",
                 }}
               >
@@ -125,14 +160,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#000000",
   },
+
   input: {
     width: "100%",
     height: 50,
-    borderColor: "gray",
+    borderColor: "#BDBDBD",
     borderWidth: 1,
     marginBottom: 16,
     padding: 16,
     borderRadius: 8,
+  },
+  focusInput: {
+    borderColor: "#FF6C00",
   },
 
   button: {
