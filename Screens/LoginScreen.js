@@ -50,97 +50,90 @@ const LoginScreen = () => {
   // const { width, height } = dimensions;
   // const isPortrait = height > width;
   return (
-    <View style={{ ...styles.container }}>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          Keyboard.dismiss();
-          setIsKeyboardOpen(false);
-        }}
-      >
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+        setIsKeyboardOpen(false);
+      }}
+    >
+      <View style={{ ...styles.container }}>
         <ImageBackground
           source={{ uri: "https://i.ibb.co/Cbzdmd8/Photo-BG.png" }}
           style={{ flex: 1, width: "100%", justifyContent: "flex-end" }}
         >
-          <TouchableWithoutFeedback
-            onPress={() => {
-              Keyboard.dismiss();
-              setIsKeyboardOpen(false);
-            }}
+          <KeyboardAvoidingView
+            style={styles.formWrapper}
+            behavior={Platform.OS === "ios" ? "padding" : null}
           >
-            <KeyboardAvoidingView
-              style={styles.formWrapper}
-              behavior={Platform.OS === "ios" ? "padding" : null}
-            >
-              <Text style={styles.title}>Войти</Text>
+            <Text style={styles.title}>Войти</Text>
 
+            <TextInput
+              style={[styles.input, mailFocus && styles.focusInput]}
+              placeholder="Адрес электронной почты"
+              value={mail}
+              onChangeText={handleMailChange}
+              onFocus={() => {
+                setIsKeyboardOpen(true);
+                setMailFocus(true);
+              }}
+              onBlur={() => {
+                setIsKeyboardOpen(false);
+                setMailFocus(false);
+              }}
+            />
+            <View style={{ width: "100%" }}>
               <TextInput
-                style={[styles.input, mailFocus && styles.focusInput]}
-                placeholder="Адрес электронной почты"
-                value={mail}
-                onChangeText={handleMailChange}
+                style={[
+                  styles.inputPassword,
+                  passwordFocus && styles.focusInput,
+                ]}
+                placeholder="Пароль"
+                secureTextEntry={!isPasswordShow ? true : false}
+                value={password}
+                onChangeText={handlePasswordChange}
                 onFocus={() => {
                   setIsKeyboardOpen(true);
-                  setMailFocus(true);
+                  setPasswordFocus(true);
                 }}
                 onBlur={() => {
                   setIsKeyboardOpen(false);
-                  setMailFocus(false);
+                  setPasswordFocus(false);
                 }}
               />
-              <View style={{ width: "100%" }}>
-                <TextInput
-                  style={[
-                    styles.inputPassword,
-                    passwordFocus && styles.focusInput,
-                  ]}
-                  placeholder="Пароль"
-                  secureTextEntry={!isPasswordShow ? true : false}
-                  value={password}
-                  onChangeText={handlePasswordChange}
-                  onFocus={() => {
-                    setIsKeyboardOpen(true);
-                    setPasswordFocus(true);
-                  }}
-                  onBlur={() => {
-                    setIsKeyboardOpen(false);
-                    setPasswordFocus(false);
-                  }}
-                />
-                <TouchableOpacity
-                  onPress={() => setIsPasswordShow(!isPasswordShow)}
-                  style={styles.showPassword}
-                >
-                  <Text style={styles.buttonTextRegister}>
-                    {!isPasswordShow ? "Показать" : "Скрыть"}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View
-                style={{
-                  display: isKeyboardOpen ? "none" : "flex",
-
-                  width: "100%",
-                }}
+              <TouchableOpacity
+                onPress={() => setIsPasswordShow(!isPasswordShow)}
+                style={styles.showPassword}
               >
-                <TouchableOpacity
-                  style={{
-                    ...styles.button,
-                  }}
-                  onPress={handleLogin}
-                >
-                  <Text style={styles.buttonText}>Войти</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.buttonRegister}>
-                  <Text style={styles.buttonTextRegister}>
-                    Нет аккаунта? Зарегистрироватся
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </KeyboardAvoidingView>
-          </TouchableWithoutFeedback>
+                <Text style={styles.buttonTextRegister}>
+                  {!isPasswordShow ? "Показать" : "Скрыть"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                display: isKeyboardOpen ? "none" : "flex",
+
+                width: "100%",
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  ...styles.button,
+                }}
+                onPress={handleLogin}
+              >
+                <Text style={styles.buttonText}>Войти</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.buttonRegister}>
+                <Text style={styles.buttonTextRegister}>
+                  Нет аккаунта? Зарегистрироватся
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAvoidingView>
         </ImageBackground>
-      </TouchableWithoutFeedback>
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

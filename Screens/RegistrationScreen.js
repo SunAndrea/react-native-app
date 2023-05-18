@@ -44,108 +44,102 @@ const RegistrationScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          Keyboard.dismiss();
-          setIsKeyboardOpen(false);
-        }}
-      >
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+        setIsKeyboardOpen(false);
+      }}
+    >
+      <View style={styles.container}>
         <ImageBackground
           source={{ uri: "https://i.ibb.co/Cbzdmd8/Photo-BG.png" }}
           style={{ flex: 1, width: "100%", justifyContent: "flex-end" }}
         >
-          <TouchableWithoutFeedback
-            onPress={() => {
-              Keyboard.dismiss();
-              setIsKeyboardOpen(false);
-            }}
-          >
-            <KeyboardAvoidingView
-              style={styles.formWrapper}
-              behavior={Platform.OS === "ios" ? "padding" : "padding"}
-            >
-              <Text style={styles.title}>Регистрация</Text>
-              <TextInput
-                style={[styles.input, loginFocus && styles.focusInput]}
-                placeholder="Логин"
-                value={login}
-                onChangeText={handleLoginChange}
-                onFocus={() => {
-                  setIsKeyboardOpen(true);
-                  setLoginFocus(true);
-                }}
-                onBlur={() => {
-                  setIsKeyboardOpen(false);
-                  setLoginFocus(false);
-                }}
-              />
-              <TextInput
-                style={[styles.input, mailFocus && styles.focusInput]}
-                placeholder="Адрес электронной почты"
-                value={mail}
-                onChangeText={handleMailChange}
-                onFocus={() => {
-                  setIsKeyboardOpen(true);
-                  setMailFocus(true);
-                }}
-                onBlur={() => {
-                  setIsKeyboardOpen(false);
-                  setMailFocus(false);
-                }}
-              />
-              <View style={{ width: "100%" }}>
-                <TextInput
-                  style={[
-                    styles.inputPassword,
-                    passwordFocus && styles.focusInput,
-                  ]}
-                  placeholder="Пароль"
-                  secureTextEntry={!isPasswordShow ? true : false}
-                  value={password}
-                  onChangeText={handlePasswordChange}
-                  onFocus={() => {
-                    setIsKeyboardOpen(true);
-                    setPasswordFocus(true);
-                  }}
-                  onBlur={() => {
-                    setIsKeyboardOpen(false);
-                    setPasswordFocus(false);
-                  }}
-                />
-                <TouchableOpacity
-                  onPress={() => setIsPasswordShow(!isPasswordShow)}
-                  style={styles.showPassword}
-                >
-                  <Text style={styles.buttonTextLogin}>
-                    {!isPasswordShow ? "Показать" : "Скрыть"}
-                  </Text>
-                </TouchableOpacity>
-              </View>
 
-              <View
-                style={{
-                  display: isKeyboardOpen ? "none" : "flex",
-                  width: "100%",
+          <KeyboardAvoidingView
+            style={styles.formWrapper}
+            behavior={Platform.OS === "ios" ? "padding" : "padding"}
+          >
+            <Text style={styles.title}>Регистрация</Text>
+            <TextInput
+              style={[styles.input, loginFocus && styles.focusInput]}
+              placeholder="Логин"
+              value={login}
+              onChangeText={handleLoginChange}
+              onFocus={() => {
+                setIsKeyboardOpen(true);
+                setLoginFocus(true);
+              }}
+              onBlur={() => {
+                setIsKeyboardOpen(false);
+                setLoginFocus(false);
+              }}
+            />
+            <TextInput
+              style={[styles.input, mailFocus && styles.focusInput]}
+              placeholder="Адрес электронной почты"
+              value={mail}
+              onChangeText={handleMailChange}
+              onFocus={() => {
+                setIsKeyboardOpen(true);
+                setMailFocus(true);
+              }}
+              onBlur={() => {
+                setIsKeyboardOpen(false);
+                setMailFocus(false);
+              }}
+            />
+            <View style={{ width: "100%" }}>
+              <TextInput
+                style={[
+                  styles.inputPassword,
+                  passwordFocus && styles.focusInput,
+                ]}
+                placeholder="Пароль"
+                secureTextEntry={!isPasswordShow ? true : false}
+                value={password}
+                onChangeText={handlePasswordChange}
+                onFocus={() => {
+                  setIsKeyboardOpen(true);
+                  setPasswordFocus(true);
                 }}
+                onBlur={() => {
+                  setIsKeyboardOpen(false);
+                  setPasswordFocus(false);
+                }}
+              />
+              <TouchableOpacity
+                onPress={() => setIsPasswordShow(!isPasswordShow)}
+                style={styles.showPassword}
               >
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={handleRegistration}
-                >
-                  <Text style={styles.buttonText}>Зарегистрироваться</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.buttonLogin}>
-                  <Text style={styles.buttonTextLogin}>
-                    Уже есть аккаунт? Войти
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </KeyboardAvoidingView>
-          </TouchableWithoutFeedback>
+                <Text style={styles.buttonTextLogin}>
+                  {!isPasswordShow ? "Показать" : "Скрыть"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View
+              style={{
+                display: isKeyboardOpen ? "none" : "flex",
+                width: "100%",
+              }}
+            >
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleRegistration}
+              >
+                <Text style={styles.buttonText}>Зарегистрироваться</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.buttonLogin}>
+                <Text style={styles.buttonTextLogin}>
+                  Уже есть аккаунт? Войти
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAvoidingView>
         </ImageBackground>
-      </TouchableWithoutFeedback>
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -166,6 +160,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
+    fontFamily: "Roboto-Regular",
     width: 184,
     height: 35,
     fontWeight: 500,
