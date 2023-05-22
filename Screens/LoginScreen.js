@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginScreen = () => {
   const [mail, setMail] = useState("");
@@ -20,6 +21,9 @@ const LoginScreen = () => {
   const [passwordFocus, setPasswordFocus] = useState(false);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [isPasswordShow, setIsPasswordShow] = useState(false);
+
+  const navigation = useNavigation();
+
   // const [dimensions, setDimensions] = useState(Dimensions.get("window"));
 
   // useEffect(() => {
@@ -46,6 +50,7 @@ const LoginScreen = () => {
     setPassword("");
     setIsKeyboardOpen(false);
     Keyboard.dismiss();
+    navigation.navigate("Posts");
   };
   // const { width, height } = dimensions;
   // const isPortrait = height > width;
@@ -124,7 +129,10 @@ const LoginScreen = () => {
               >
                 <Text style={styles.buttonText}>Войти</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.buttonRegister}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Register")}
+                style={styles.buttonRegister}
+              >
                 <Text style={styles.buttonTextRegister}>
                   Нет аккаунта? Зарегистрироватся
                 </Text>
