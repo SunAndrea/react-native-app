@@ -121,7 +121,6 @@ const styles = StyleSheet.create({
     marginTop: 32,
   },
   imageTitle: {
-    // textAlign: "left",
     fontWeight: 500,
     fontSize: 16,
     lineHeight: 19,

@@ -15,6 +15,7 @@ import LoginScreen from "./Screens/LoginScreen";
 import CreatePostsScreen from "./Screens/CreatePostsScreen";
 import PostsScreen from "./Screens/PostsScreen";
 import CommentsScreen from "./Screens/CommentsScreen";
+import ProfileScreen from "./Screens/ProfileScreen";
 // SplashScreen.preventAutoHideAsync();
 // const loadApplication = async () => {
 //   await Font.loadAsync({
@@ -103,7 +104,7 @@ const useRoute = (isAuth) => {
           ),
         }}
         name="Proffile"
-        component={CreatePostsScreen}
+        component={ProfileScreen}
       />
     </MainTab.Navigator>
   );
@@ -135,9 +136,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-// <View onLayout={onLayoutRootView} style={styles.container}>
-//   {/* <RegistrationScreen /> */}
-//   <LoginScreen />
-
-//   <StatusBar style="auto" />
-// </View>
